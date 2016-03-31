@@ -1,3 +1,56 @@
+CollectD + StatsD plugin + InfluxDB + Grafana
+---------------------------------------------
+
+This image started out as a fork from [here](https://github.com/kamon-io/docker-grafana-graphite), the original readme content is kept for reference.
+
+Instructions assume you're on a linux box and have docker installed etc, if not, you'll need to perform some Apple magic to make it work!
+
+To build the image
+------------------
+from the root
+
+`docker build -t international/docker-collectd-influx-grafana:latest .`
+
+NB. I was using this command as it was off my repo, but the above should work iantmoore/docker-grafana-graphite:latest .
+
+Once the image is built you need a container using the image:
+
+`docker run -p 80:80 -p 8125:8125/udp -p 8126:8126 -p 8086:8086 --name collectd-influxdb-grafana international/docker-collectd-influx-grafana:latest`
+
+use `docker run -d ....` to run docker in the background
+
+Some useful commands
+
+docker ps -a    - list containers and their images
+
+docker start collectd-influxdb-grafana     - to re-start the container called collectd-influxdb-grafana
+
+docker exec -it collectd-influxdb-grafana bash     - attach a shell to a running container - eg to run influx queries, diagnose issues etc.
+
+docker images     - list available images
+docker rmi  - delete an image
+docker rm   - delete a container
+
+If you make changes to the Dockerfile and any config, run docker build again.  You'll need to delete the existing container and recreate (or choose a new name for it).
+
+
+
+TODO
+----
+* pre create the influx datasource in grafana
+* pre configure some grafana dashboards
+* clean out old dependencies and old graphite config.
+
+
+
+
+
+
+
+Old README
+----------
+
+
 StatsD + Graphite + Grafana 2 + Kamon Dashboards
 ---------------------------------------------
 
